@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cd client && npm run dev",
+    "format": "prettier --write **/*.{js,jsx}",
+    "format:check": "prettier --check **/*.{js,jsx,ts,tsx}",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -18,6 +22,7 @@
   },
   "homepage": "https://github.com/kristiania-pg6301-2022/pg6301-innlevering-Neutix#readme",
   "devDependencies": {
+    "concurrently": "^7.0.0",
     "husky": "^7.0.4",
     "prettier": "^2.5.1"
   }
