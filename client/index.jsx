@@ -21,12 +21,12 @@ function FrontPage() {
 
 function App() {
   return (
-                <BrowserRouter>
+                                 <BrowserRouter>
              <Routes>
             <Route path={"/"} element={<FrontPage />} />
-        </Routes>
+                         </Routes>
 
-    </BrowserRouter>
+                        </BrowserRouter>
   );
 }
 
