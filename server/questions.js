@@ -1,13 +1,10 @@
-export function randomQuestion(){
+export function randomQuestion() {
   return Questions[Math.trunc(Math.random() * Questions.length)];
 }
 
-
-
 export function isCorrectAnswer(question, answer) {
-    return question.correct_answer[answer + "_correct"] === "true";
+  return question.correct_answer[answer + "_correct"] === "true";
 }
-
 
 export const Questions = [
   {
