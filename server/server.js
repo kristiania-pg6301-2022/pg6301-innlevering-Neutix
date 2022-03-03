@@ -30,7 +30,7 @@ app.use((req, res, next) => {
   }
 });
 
-const server = app.listen(process.env.PORT , () => {
+const server = app.listen(process.env.PORT || 3000 , () => {
   console.log(`server started on http://localhost:${server.address().port}`),
     console.log(`questions on http://localhost:${server.address().port}/api/question`)
 });
