@@ -8,7 +8,7 @@ function FrontPage() {
       <h1>Code Quiz</h1>
 
       <button style={{padding: "5px", marginRight: "1rem"}}>
-        <Link style={{textDecoration: "none"}} to="/answer">Answer a question</Link>
+        <Link style={{textDecoration: "none"}} to="/answer">Start question</Link>
       </button>
 
       <button style={{padding: "5px"}}>
