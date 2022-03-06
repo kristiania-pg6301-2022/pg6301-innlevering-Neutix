@@ -14,7 +14,7 @@
     "format": "prettier --write **/*.{js,jsx}",
     "format:check": "prettier --check **/*.{js,jsx}",
     "verify": "jest --collectCoverage",
-    "test": "cd client && npm run test",
+    "test": "cd client && npm test -- --collectCoverage",
     "prepare": "husky install"
   },
   "repository": {
