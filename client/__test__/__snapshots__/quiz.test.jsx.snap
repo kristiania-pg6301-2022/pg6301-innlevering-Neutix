@@ -1,3 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Quiz applicatio DummyTest 1`] = `"<h1>Code Quiz</h1><div><button style=\\"margin: 1rem; font-size: 1.5rem;\\">New question</button></div>"`;
+
+exports[`Quiz application DummyTest 1`] = `"<h1>Code Quiz</h1><div><button style=\\"margin: 1rem; font-size: 1.5rem;\\">New question</button></div>"`;
+
+exports[`Quiz application should show random question 1`] = `"<div><button style=\\"margin: 1rem; font-size: 1.5rem;\\">New question</button></div>"`;
+
 exports[`Quiz test DummyTest 1`] = `"<h1>Code Quiz</h1><div><button style=\\"margin: 1rem; font-size: 1.5rem;\\">New question</button></div>"`;
