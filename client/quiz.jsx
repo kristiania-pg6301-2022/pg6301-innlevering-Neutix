@@ -1,85 +1,89 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 
-export function AnswerQuestion({ question, onReload, onSubmitAnswer }) {
+function FrontPage() {
+  return (
+    <div>
+      <h1>Welcome to Code Quiz!</h1>
+      <Link to={"/question"}>
+        <button type="button">Start Quiz</button>
+      </Link>
+    </div>
+  );
+}
+
+function FindQuestion() {
+  const navigate = useNavigate();
+
   async function handleConfirm(answer) {
     const { id } = question;
-    const res = await fetch("/api/question/answer", {
+    const res = await fetch(`/api/question/answer`, {
       method: "post",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ id, answer }),
+      body: JSON.stringify({ answer, id }),
     });
-    onReload();
+    if (res.ok) {
+      navigate("/question/result");
+    }
   }
 
-onSubmitAnswer()
+  const [question, setQuestion] = useState();
+  useEffect(async () => {
+    const res = await fetch("/api/question");
+    setQuestion(await res.json());
+  }, []);
+
+  if (!question) return <div>Loading...</div>;
+
   return (
     <div>
       <h1>{question.question}</h1>
       {Object.keys(question.answers)
         .filter((a) => question.answers[a])
-        .map((a) => (
-          <div key={a}>
-            <button
-              style={{ margin: "1rem", fontSize: "1.5rem" }}
-              onClick={(q) => handleConfirm(a)}
-            >
-              {question.answers[a]}
+        .map((answer) => (
+          <div key={answer}>
+            <button onClick={(q) => handleConfirm(answer)}>
+              {question.answers[answer]}
             </button>
           </div>
         ))}
     </div>
-);
+  );
 }
 
-export function QuestionComponent({ reload }) {
-  const [question, setQuestion] = useState();
-
-  async function handleLoadQuestion() {
-    const res = await fetch("/api/question/random");
-    setQuestion(await res.json());
-  }
-
-  function handleReload() {
-    setQuestion(undefined);
-    reload();
-  }
-
-  if (!question) {
-    return (
-      <div>
-        <button
-          style={{ margin: "1rem", fontSize: "1.5rem" }}
-          onClick={handleLoadQuestion}
-        >
-          New question
-        </button>
-      </div>
-    );
-  }
-
-  return <AnswerQuestion question={question} onReload={handleReload} />;
+function AnswerResponse() {
+  const [answer, setAnswer] = useState("No answers yet");
+  useEffect(async () => {
+    const res = await fetch("/api/question/result");
+    setAnswer(await res.json());
+  }, []);
+  return (
+    <div>
+      <h1>You answered: {answer}</h1>
+      <Link to={"/question"}>
+        <button type="button">New Question</button>
+      </Link>
+    </div>
+  );
 }
 
 export function QuizApp() {
-  const [score, setScore] = useState();
-  useEffect(reload, []);
-
-  async function reload() {
-    const res = await fetch("/api/question/score");
-    setScore(await res.json());
-  }
-  console.log(score);
   return (
-    <>
-      <h1>Code Quiz</h1>
-      {score && (
-        <div style={{ fontSize: "1.5rem" }}>
-          Correct answers: {score.correct} Total answers: {score.answered}
-        </div>
-      )}
-      <QuestionComponent reload={reload} />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path={"/"} element={<FrontPage />} />
+        <Route path={"/question"} element={<FindQuestion />} />
+        <Route path={"/question/result"} element={<AnswerResponse />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
